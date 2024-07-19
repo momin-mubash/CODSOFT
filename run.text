@@ -1,0 +1,23 @@
+AFTER CLONING THE PROJECT YOU NEED TO FOLLOW THESE STEPS IN ORDER TO GET THE RIGHT OUTPUT 
+
+1. Install Dependencies:
+Make sure you have installed all the required dependencies, including react-scripts. Navigate to the root of your project directory and run
+
+npm install
+
+2.Check package.json:
+Verify that react-scripts is listed in the dependencies section of your package.json file. It should look something like this:
+
+"dependencies": {
+  "react-scripts": "x.x.x"
+} 
+
+if its missing,follow step-3
+3.install react_scripts:
+
+npm install react-scripts --save
+
+4.Run the Application:
+After ensuring everything is properly installed, try running the React application again:
+
+npm start
