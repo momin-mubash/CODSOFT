@@ -1,0 +1,107 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.app {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h1 {
+  text-align: center;
+  color: #fff;
+}
+
+.add-task input {
+  width: calc(100% - 100px);
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.add-task button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #ff7e5f;
+  cursor: pointer;
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.task-item {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.task-item.completed {
+  background-color: #d3ffd3;
+}
+
+.task-text {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+}
+
+.task-actions .status-complete {
+  color: green;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.task-actions .status-incomplete {
+  color: red;
+  margin-right: 10px;
+}
+
+.task-item button {
+  border: none;
+  background-color: transparent;
+  color: #ff7e5f;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .app {
+    padding: 10px;
+  }
+
+  .add-task input {
+    width: calc(100% - 70px);
+  }
+
+  .add-task button {
+    padding: 10px 15px;
+  }
+}
