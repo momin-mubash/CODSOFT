@@ -1,0 +1,98 @@
+.header {
+  background-color: #661a6e;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #36063e;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.header nav {
+  margin-top: 0.5rem;
+}
+
+.header nav a {
+  color: white;
+  margin: 0 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease; 
+}
+
+.header nav a:hover {
+  
+  color: #b66e9c;
+}
+
+.editor {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.blog-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around; /* Adjust spacing between cards */
+  padding: 1rem;
+}
+
+.blog-card {
+  flex: 1 1 calc(33.33% - 1rem); /* Three cards per row, adjust as needed */
+  max-width: calc(33.33% - 1rem);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .blog-card {
+    flex: 1 1 calc(50% - 1rem); /* Two cards per row on tablets */
+    max-width: calc(50% - 1rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-card {
+    flex: 1 1 100%; /* One card per row on mobile */
+    max-width: 100%;
+  }
+}
+
+
+
+.login {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.editor-buttons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px; /* Add some space between the buttons */
+}
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+
+.editor-buttons button {
+  flex: none; /* Ensures buttons do not take equal space */
+}
+

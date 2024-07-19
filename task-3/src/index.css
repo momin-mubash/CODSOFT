@@ -1,0 +1,75 @@
+.login-container, .editor-container {
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 40px;
+  padding: 2rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+  border: none;
+  border-radius: 4px;
+  background-color: #661a6e;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease; 
+}
+
+button:hover {
+  background-color: #b66e9c;
+}
+
+h2 {
+  text-align: center;
+}
+
+.blog-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.blog-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(102, 26, 110, 0.4); /* Increased shadow values */
+  padding: 1rem;
+  max-width: 300px;
+  text-align: center;
+}
+.blog-card h3 {
+  margin-top: 0;
+}
+
+.blog-card p {
+  color: #666;
+}
+
+.blog-card a {
+  color: #661a6e;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.blog-card a:hover {
+  text-decoration: underline;
+}
+
