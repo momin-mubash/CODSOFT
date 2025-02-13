@@ -1,102 +1,96 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { doc, setDoc, updateDoc, deleteDoc, getDoc } from 'firebase/firestore';
-import { firestore } from '../firebase'; // Ensure firestore is properly imported and initialized
+import { doc, setDoc, getDoc,updateDoc } from 'firebase/firestore';
+import { useParams, useNavigate } from 'react-router-dom';
+import { db, auth } from '../firebase'; 
 
 const BlogEditor = () => {
-  const { id: postId } = useParams();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [author, setAuthor] = useState('');
+  const [author,setAuthor] = useState('');
+  const { postId } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('BlogEditor component rendered');
-    if (postId) {
-      const fetchPost = async () => {
-        const postRef = doc(firestore, 'posts', postId);
-        const postSnapshot = await getDoc(postRef);
-        if (postSnapshot.exists()) {
-          const postData = postSnapshot.data();
-          setTitle(postData.title);
-          setContent(postData.content);
-          setAuthor(postData.author);
+    if (!postId) return; // Exit if there's no postId (means creating a new post)
+  
+    const fetchPost = async () => {
+      try {
+        const postRef = doc(db, 'posts', postId);
+        const postDoc = await getDoc(postRef);
+  
+        if (postDoc.exists()) {
+          const post = postDoc.data();
+  
+          if (post.authorId === auth.currentUser?.uid) {
+            setTitle(post.title);
+            setContent(post.content);
+          } else {
+            alert("❌ Sorry! You can't edit blogs owned by others.");
+            navigate('/error');
+          }
         } else {
-          // Handle post not found or redirect to error page
-          navigate('/404'); // Example: Redirect to a 404 page if post not found
+          navigate('/404'); // If post doesn't exist, redirect to 404
         }
-      };
-
-      fetchPost();
-    }
+      } catch (error) {
+        console.error("Error fetching post: ", error);
+        navigate('/error');
+      }
+    };
+  
+    fetchPost();
   }, [postId, navigate]);
+  
+  
+     
 
   const handleSave = async () => {
-    const postRef = doc(firestore, 'posts', postId || `${Date.now()}`);
-    const postData = { title, content, author };
+    const user = auth.currentUser;
+    if (!user) {
+        navigate('/login');
+        return;
+    }
+
+    if (!author) {
+        alert("Please enter an author name.");
+        return;
+    }
 
     try {
-      if (postId) {
-        await updateDoc(postRef, postData);
-      } else {
-        await setDoc(postRef, postData);
-      }
-      navigate('/'); // Redirect to home page after save
-    } catch (error) {
-      console.error('Error saving post: ', error);
-      // Handle error saving post (e.g., show error message to user)
-    }
-  };
+        const postRef = doc(db, 'posts', postId || new Date().toISOString()); // Reference for Firestore
 
-  const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete this post?')) {
-      try {
-        const postRef = doc(firestore, 'posts', postId);
-        await deleteDoc(postRef);
-        navigate('/'); // Redirect to home page after delete
-      } catch (error) {
-        console.error('Error deleting post: ', error);
-        // Handle error deleting post (e.g., show error message to user)
-      }
+        const postData = {
+            title,
+            content,
+            updatedAt: new Date().toISOString(),
+        };
+
+        if (postId) {
+            // Update existing post, but do NOT overwrite author details
+            await updateDoc(postRef, postData);
+        } else {
+            // Create new post with author name and ID
+            await setDoc(postRef, { ...postData, author: author, authorId: user.uid });
+        }
+
+        console.log("Post saved successfully:", postData);
+        navigate('/');
+    } catch (error) {
+        console.error("Error saving post: ", error);
     }
-  };
+};
+
 
   return (
-    <div className="editor-container">
-      <h2>{postId ? 'Edit Post' : 'Create Post'}</h2>
-      <input 
-        type="text" 
-        placeholder="Title" 
-        value={title} 
-        onChange={(e) => setTitle(e.target.value)} 
-      />
-      <input 
-        type="text" 
-        placeholder="Author" 
-        value={author} 
-        onChange={(e) => setAuthor(e.target.value)} 
-        disabled={!!postId} 
-      />
-      <textarea 
-        placeholder="Content" 
-        value={content} 
-        onChange={(e) => setContent(e.target.value)} 
-      />
-      <div className="button-container">
-        <button onClick={handleSave}>
-          {postId ? 'Save Changes' : 'Publish'}
-        </button>
-        {postId && (
-          <button 
-            onClick={handleDelete} 
-            style={{ backgroundColor: '#dc3545', marginLeft: '10px' }}
-          >
-            Delete
-          </button>
-        )}
-      </div>
+    <div>
+      <h1>{postId ? 'Edit Post' : 'Create Post'}</h1>
+      <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
+      <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder="Content"></textarea>
+      <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author Name" />
+
+
+      <button onClick={handleSave}>Save</button>
     </div>
   );
-}
+};
 
 export default BlogEditor;

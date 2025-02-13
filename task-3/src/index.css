@@ -1,4 +1,4 @@
-.login-container, .editor-container {
+.login-container,.signup-container, .editor-container {
   max-width: 600px;
   margin: 0 auto;
   margin-top: 40px;
@@ -16,6 +16,10 @@ input, textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+textarea{
+  height: 200px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 button {

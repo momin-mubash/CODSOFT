@@ -1,0 +1,13 @@
+{
+  "rules": {
+    "posts": {
+      "$postId": {
+        ".read": true,
+
+        ".write": "auth != null && auth.uid == data.child('author').val()"
+      }
+    },
+    ".read": false,
+    ".write": false
+  }
+}
