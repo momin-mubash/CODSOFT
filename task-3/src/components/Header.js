@@ -10,7 +10,7 @@ const Header = () => {
       <h1>Bloggy</h1>
       <nav>
         <Link to="/">Home</Link>
-        <Link to="/create">Create Post</Link>
+        <Link to="/create">Create</Link>
         <Link to="/login">Login</Link>
         <Link to="/signup">SignUp</Link>
 

@@ -84,7 +84,7 @@ const BlogEditor = () => {
     <div>
       <h1>{postId ? 'Edit Post' : 'Create Post'}</h1>
       <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Title" />
-      <textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} placeholder="Content"></textarea>
+      <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Content"></textarea>
       <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Author Name" />
 
 

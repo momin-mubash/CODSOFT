@@ -47,7 +47,7 @@
 }
 
 .blog-card {
-  flex: 1 1 calc(33.33% - 1rem); /* Three cards per row, adjust as needed */
+  flex: 1 1 calc(33.33% - 1rem); /* Three cards per row */
   max-width: calc(33.33% - 1rem);
   background-color: #fff;
   border: 1px solid #ddd;
@@ -89,9 +89,27 @@
     padding: 0.3rem 0.5rem;
   }
 }
+/*for very small screens*/
+@media (max-width: 350px) {
+  .header {
+    flex-direction: column; 
+    align-items: center;
+  }
 
+  .header nav {
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: center;
+    gap: 0.3rem; /* Reduce spacing */
+    overflow: hidden; /* Avoid overflow issues */
+  }
 
-
+  .header nav link {
+    font-size: 0.9rem; /* Adjust font size */
+    padding: 0.2rem 0.3rem; /* Reduce padding */
+    white-space: nowrap; /* Prevent breaking */
+  }
+}
 .login {
   max-width: 400px;
   margin: 2rem auto;
