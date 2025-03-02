@@ -18,6 +18,7 @@ const Login = () => {
       navigate('/');
       console.log("Successful login");
     } catch (error) {
+      alert("It looks like you don't have an account yet. Sign up to continue. ")
       console.log("Error in logging in:", error);
     }
   };
