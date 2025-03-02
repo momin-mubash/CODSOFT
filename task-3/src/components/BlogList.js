@@ -26,7 +26,10 @@ function BlogList() {
 
   const handleEdit = (post) => {
     const user = auth.currentUser; // Get the currently logged-in user
-
+    if (!user) {
+      alert("Sorry! You must be logged in to edit blogs.");//alert if not the logged in to the system
+      return;
+    } 
     if (post.authorId === auth.currentUser?.uid) {
       navigate(`/edit/${post.id}`); // Redirect to BlogEditor
     } else {

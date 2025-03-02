@@ -14,70 +14,70 @@ const BlogEditor = () => {
     if (!postId) return; // Exit if there's no postId (means creating a new post)
   
     const fetchPost = async () => {
-      try {
-        const postRef = doc(db, 'posts', postId);
-        const postDoc = await getDoc(postRef);
-  
-        if (postDoc.exists()) {
-          const post = postDoc.data();
-  
-          if (post.authorId === auth.currentUser?.uid) {
-            setTitle(post.title);
-            setContent(post.content);
-          } else {
-            alert("❌ Sorry! You can't edit blogs owned by others.");
+        try {
+          const postRef = doc(db, 'posts', postId);
+          const postDoc = await getDoc(postRef);
+          
+          if (postDoc.exists()) {
+            const post = postDoc.data();
+           
+            if (post.authorId === auth.currentUser?.uid) {
+              setTitle(post.title);
+              setContent(post.content);
+            } else {
+              alert("❌ Sorry! You can't edit blogs owned by others.");
             navigate('/error');
+            }
+          } else {
+            navigate('/404'); // If post doesn't exist, redirect to 404
           }
-        } else {
-          navigate('/404'); // If post doesn't exist, redirect to 404
+        } catch (error) {
+          console.error("Error fetching post: ", error);
+          navigate('/error');
         }
-      } catch (error) {
-        console.error("Error fetching post: ", error);
-        navigate('/error');
-      }
-    };
-  
+      }; 
+
     fetchPost();
   }, [postId, navigate]);
-  
-  
-     
+
+
+
 
   const handleSave = async () => {
     const user = auth.currentUser;
     if (!user) {
-        navigate('/login');
-        return;
+      navigate('/login');
+      return;
     }
-
+    
     if (!author) {
-        alert("Please enter an author name.");
-        return;
-    }
+      alert("Please enter an author name.");
+      return;
+  }
 
     try {
-        const postRef = doc(db, 'posts', postId || new Date().toISOString()); // Reference for Firestore
+      const postRef = doc(db, 'posts', postId || new Date().toISOString()); // Reference for Firestore
+      
+      const postData = {
+       title,
+       content, 
+       updatedAt: new Date().toISOString(),
+      };
 
-        const postData = {
-            title,
-            content,
-            updatedAt: new Date().toISOString(),
-        };
-
-        if (postId) {
-            // Update existing post, but do NOT overwrite author details
-            await updateDoc(postRef, postData);
-        } else {
-            // Create new post with author name and ID
-            await setDoc(postRef, { ...postData, author: author, authorId: user.uid });
-        }
-
-        console.log("Post saved successfully:", postData);
-        navigate('/');
-    } catch (error) {
-        console.error("Error saving post: ", error);
+    if (postId) {
+        // Update existing post, but do NOT overwrite author details
+        await updateDoc(postRef, postData);
+    } else {
+        // Create new post with author name and ID
+        await setDoc(postRef, { ...postData, author: author, authorId: user.uid });
     }
-};
+    
+    console.log("Post saved successfully:", postData);  
+      navigate('/');
+    } catch (error) {
+      console.error("Error saving post: ", error);
+    }
+  };
 
 
   return (
