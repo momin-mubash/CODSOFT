@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 // Login Component
 const Login = () => {
   console.log("Login component rendered");
-  
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -13,15 +13,33 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     const auth = getAuth();
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      navigate('/');
       console.log("Successful login");
+      navigate('/');
     } catch (error) {
-      alert("It looks like you don't have an account yet. Sign up to continue. ")
-      console.log("Error in logging in:", error);
+      console.error("Login Error:", error.code);
+
+        // Password is incorrect
+      if (error.code === "auth/wrong-password") {
+        alert("Incorrect password. Please try again.");
+        // Invalid email format
+      } else if (error.code === "auth/invalid-email") {
+        alert("Invalid email format. Please enter a valid email.");
+      } else {
+        // User does not exist
+          const shouldSignUp = window.confirm(
+          "No account found with this email. Would you like to sign up?"
+        );
+        if (shouldSignUp) {
+          navigate('/signup'); // Redirect to Sign-Up page
+        }
+      
+      }
     }
   };
+
 
   return (
     <div className="login-container">
